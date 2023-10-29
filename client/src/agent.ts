@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 const sleep = () => new Promise(resolve => setTimeout(resolve, 200));
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 const responseBody = (response: AxiosResponse) => response.data;
 
 //we can use redux in any kind of application we attach our bearer token, sending data
