@@ -49,7 +49,7 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddDbContext<DataContext>(option =>
 {
-    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 });
 
@@ -79,9 +79,14 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<IGambit, GambitRepository>();
 builder.Services.AddScoped<TokenService>();
 var app = builder.Build();
+
+//serve static files
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseCors(opt =>
 {
-    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
+    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000","https://gambitapp.azurewebsites.net/");
 });
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -98,6 +103,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//this allows us to run on same localhost as our api
+app.MapFallbackToController("Index", "Fallback");
+
 var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<DataContext>();
 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();

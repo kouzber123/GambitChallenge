@@ -25,9 +25,8 @@ export default function Header() {
   const { user } = useAppSelector(state => state.account);
   return (
     <AppBar
-
       position="static"
-      sx={{ mb: 4, backgroundColor: "#3b82f6" }}
+      sx={{ backgroundColor: "#3b82f6" }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Box

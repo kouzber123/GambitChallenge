@@ -21,6 +21,11 @@ namespace API.Controllers
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// handles user login
+        /// </summary>
+        /// <param name="loginDto"></param>
+        /// <returns>if incorrect credentials return 401 else user dto</returns>
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
@@ -37,8 +42,13 @@ namespace API.Controllers
                 Token = await _tokenService.GenerateToken(user)
             };
         }
-
+        /// <summary>
+        ///  handles registration
+        /// </summary>
+        /// <param name="registerDto"></param>
+        /// <returns>if  failure return details that went wrong else  201 </returns>
         [HttpPost("register")]
+
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
             var user = new User
@@ -60,7 +70,10 @@ namespace API.Controllers
             await _userManager.AddToRoleAsync(user, "Member");
             return StatusCode(201);
         }
-
+        /// <summary>
+        /// client sends jwt token and check name if it exists then renew user
+        /// </summary>
+        /// <returns>user details</returns>
         [Authorize]
         [HttpGet("currentUser")]
         public async Task<ActionResult<UserDto>> GetCurrentUser()

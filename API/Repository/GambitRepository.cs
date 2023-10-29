@@ -6,6 +6,10 @@ namespace API.Repository
 {
     public class GambitRepository : IGambit
     {
+        /// <summary>
+        /// we handle get request for the gambit data and send it back to our client we do not save it  to our db
+        /// </summary>
+        /// <returns></returns>
         public async Task<ActionResult<List<ParsedData>>> GetDataAsync()
         {
             using HttpClient client = new();

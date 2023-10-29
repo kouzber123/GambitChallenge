@@ -10,8 +10,10 @@ import { toast } from "react-toastify";
 //add small delay
 const sleep = () => new Promise(resolve => setTimeout(resolve, 200));
 
-axios.defaults.baseURL = "http://localhost:5048/api/";
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+axios.defaults.withCredentials = true;
 const responseBody = (response: AxiosResponse) => response.data;
+
 //we can use redux in any kind of application we attach our bearer token, sending data
 axios.interceptors.request.use(config => {
   const token = store.getState().account.user?.token;
@@ -23,8 +25,7 @@ axios.interceptors.request.use(config => {
 //returning data
 axios.interceptors.response.use(
   async response => {
-    await sleep();
-
+    if (import.meta.env.DEV) await sleep();
     return response;
   },
   (error: AxiosError) => {

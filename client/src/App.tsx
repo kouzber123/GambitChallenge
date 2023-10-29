@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Header from "./features/components/Header";
 import { Container } from "@mui/material";
@@ -8,7 +8,9 @@ import { FetchCurrentUser } from "./features/account/accountSlice";
 import LoadingComponent from "./features/components/LoadingComponent";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LandingPage from "./features/LandingPage";
 function App() {
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
 
@@ -22,13 +24,11 @@ function App() {
       console.log(error);
     }
   }, [dispatch]);
+
   useEffect(() => {
-    setTimeout(() => {
-      initApp().then(() => setLoading(false));
-    }, 200);
+    initApp().then(() => setLoading(false));
   }, [initApp]);
 
-  if (loading) return <LoadingComponent message="Loading application..." />;
   return (
     <>
       <ToastContainer
@@ -39,9 +39,15 @@ function App() {
       <CssBaseline />
 
       <Header />
-      <Container>
-        <Outlet />
-      </Container>
+      {loading ? (
+        <LoadingComponent message="Loading application..." />
+      ) : location.pathname === "/" ? (
+        <LandingPage />
+      ) : (
+        <Container sx={{ mt: 4 }}>
+          <Outlet />
+        </Container>
+      )}
     </>
   );
 }

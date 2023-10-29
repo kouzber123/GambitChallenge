@@ -9,6 +9,11 @@ namespace API.Helper
 {
     public static class GambitFormatter
     {
+        /// <summary>
+        /// Format data from the end point to proper json data
+        /// </summary>
+        /// <param name="rawData"></param>
+        /// <returns></returns>
         public static List<ParsedData> FormatData(string rawData)
         {
             List<ParsedData> parsedDatas = new();

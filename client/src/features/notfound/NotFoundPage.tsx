@@ -1,10 +1,13 @@
 import { Button, Typography } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 export default function NotFoundPage() {
+  const location = useLocation();
   return (
     <>
-      <Typography>This is not found page </Typography>
+      <Typography variant="h1"> {location.pathname} Not found page </Typography>
       <Button
+        size="large"
+        variant="contained"
         component={NavLink}
         to="/"
       >

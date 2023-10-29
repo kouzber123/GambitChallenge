@@ -11,6 +11,11 @@ namespace API.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _config;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="config"></param>
         public TokenService(UserManager<User> userManager, IConfiguration config)
         {
             _config = config;

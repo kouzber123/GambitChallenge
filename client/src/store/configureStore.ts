@@ -4,7 +4,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { gambitSlice } from "../features/gambitSlice";
 import { accountSlice } from "../features/account/accountSlice";
-
+/**
+ * redux store
+ */
 export const store = configureStore({
   reducer: {
     gambitData: gambitSlice.reducer,

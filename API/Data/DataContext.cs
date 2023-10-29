@@ -11,23 +11,20 @@ namespace API.Data
         {
         }
 
+
+        /// <summary>
+        /// we arent using roles for any specific purposes on this demo but we could expand it in the future
+        /// </summary>
+        /// <param name="builder"></param>
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             builder.Entity<IdentityRole>()
             .HasData(
-                new IdentityRole { Name = "Member", NormalizedName = "Member" },
-                new IdentityRole { Name = "Member", NormalizedName = "Admin" }
+                new IdentityRole { Name = "Member", NormalizedName = "MEMBER" },
+                new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" }
             );
-
-            // builder.Entity<UserManager<User>>()
-            // .HasData(
-            //     new User { UserName = "Jakob", Email = "Jakob@hotmail.com" }
-
-            // );
-  
-
         }
 
     }
