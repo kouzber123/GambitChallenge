@@ -17,7 +17,7 @@ between Github and fly.IO, using git actions
 * https://gambitapp.fly.dev/
 * you can register or using dummy data:
 * username: bob
-*password: Pa$$w0rd
+* password: Pa$$w0rd
 
 
 if you want try on container then pull from here: kouzber/gambit:latest
@@ -26,8 +26,8 @@ if you want try on container then pull from here: kouzber/gambit:latest
 * validate authentication
 * Imports data from https://tuftuf.gambitlabs.fi/feed.txt
 * Api endpoints
-*Client side validation
-*Loading spinner
+* Client side validation
+* Loading spinner
 
 ## 3. Technologies
 * ASP.NET
@@ -39,8 +39,8 @@ if you want try on container then pull from here: kouzber/gambit:latest
 * Redux
 * Axios
 * MUI
-*Git action
-*Docker
+* Git action
+* Docker
 
 ## 4. Usage
 
@@ -98,6 +98,8 @@ or localhost:8080
 
 
 ## 6. Sources
-https://mui.com/
-https://redux.js.org/
-https://learn.microsoft.com/en-us/nuget/
+* https://mui.com/
+* https://redux.js.org/
+* https://learn.microsoft.com/en-us/nuget/
+* https://fly.io/docs/
+* https://docs.docker.com/
