@@ -77,7 +77,10 @@ builder.Services.AddDbContext<DataContext>(opt =>
 });
 
 
-builder.Services.AddCors();
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy", builder => builder.AllowCredentials().AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+});
 builder.Services.AddIdentityCore<User>(opt =>
 {
     //Prevent duplicate emails
@@ -108,10 +111,7 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-app.UseCors(opt =>
-{
-    opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-});
+app.UseCors("CorsPolicy");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
