@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace gambitChallenge.Migrations
 {
     /// <inheritdoc />
-    public partial class PostgresInitial : Migration
+    public partial class postgresinit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -164,8 +164,8 @@ namespace gambitChallenge.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "7b06f562-5e77-4046-a4dd-530cf9da7b02", null, "Admin", "ADMIN" },
-                    { "deef68ff-29ff-4235-85e6-5d1482a75389", null, "Member", "MEMBER" }
+                    { "43398d7c-a271-45f9-9ccb-7c1eece0953b", null, "Member", "MEMBER" },
+                    { "4a61d63b-a985-4160-9dac-1e3cc40b95e9", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

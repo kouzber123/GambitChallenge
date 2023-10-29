@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace gambitChallenge.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231029152642_PostgresInitial")]
-    partial class PostgresInitial
+    [Migration("20231029192305_postgresinit")]
+    partial class postgresinit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,13 +117,13 @@ namespace gambitChallenge.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "deef68ff-29ff-4235-85e6-5d1482a75389",
+                            Id = "43398d7c-a271-45f9-9ccb-7c1eece0953b",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "7b06f562-5e77-4046-a4dd-530cf9da7b02",
+                            Id = "4a61d63b-a985-4160-9dac-1e3cc40b95e9",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

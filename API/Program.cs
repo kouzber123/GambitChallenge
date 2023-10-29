@@ -46,10 +46,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
-
 string connString;
-
-//if we are on developement keep using this otherwise us else
 if (builder.Environment.IsDevelopment())
     connString = builder.Configuration.GetConnectionString("DefaultConnection");
 else
@@ -70,17 +67,15 @@ else
     var updatedHost = pgHost.Replace("flycast", "internal");
 
     connString = $"Server={updatedHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
+
 }
 builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseNpgsql(connString);
 });
+ Console.WriteLine(connString);
 
-
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("CorsPolicy", builder => builder.AllowCredentials().AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-});
+builder.Services.AddCors();
 builder.Services.AddIdentityCore<User>(opt =>
 {
     //Prevent duplicate emails
@@ -111,7 +106,10 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-app.UseCors("CorsPolicy");
+app.UseCors(opt =>
+{
+    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000", "https://gambitapp.azurewebsites.net/");
+});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -138,6 +136,7 @@ var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 //just initial data > users to be added for our app
 try
 {
+    await context.Database.MigrateAsync();
     await DbInit.Init(userManager);
 }
 catch (Exception ex)
