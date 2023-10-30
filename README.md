@@ -13,6 +13,11 @@ this includes both front end client and serverside
 I also included Automated deployment for this app so basic DevOps
 between Github and fly.IO, using git actions
 
+* Data is formatted to int / long or Real4
+* Negative values are give - symbol
+* Units are displayed to values that have relatively readable proper Unit value
+* this should improve readability
+
 ###live app at
 * https://gambitapp.fly.dev/
 * you can register or using dummy data:
