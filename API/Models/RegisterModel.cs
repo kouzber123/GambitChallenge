@@ -8,6 +8,8 @@ namespace API.Models
     public class RegisterModel
     {
         public int Register { get; set; }
-        public float Value { get; set; }
+        public double Value { get; set; }
+        public string Description { get; set; }
+        public string Unit { get; set; }
     }
 }

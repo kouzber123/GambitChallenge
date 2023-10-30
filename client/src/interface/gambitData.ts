@@ -15,4 +15,6 @@ export interface RegisterValues {
 export interface Register {
   register: number;
   value: number;
+  description: string;
+  unit: string;
 }

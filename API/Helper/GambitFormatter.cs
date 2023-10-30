@@ -21,7 +21,7 @@ namespace API.Helper
             var parsedData = new ParsedData
             {
                 TimeStamp = lines[0],
-                RegisterValues = new Dictionary<int, float>(),
+
                 Registers = new List<RegisterModel>()
             };
 
@@ -30,19 +30,42 @@ namespace API.Helper
                 var parts = lines[i].Split(':');
                 if (parts.Length == 2 && int.TryParse(parts[0], out int key) && float.TryParse(parts[1], out float value))
                 {
-                    parsedData.RegisterValues[key] = value;
-
                     var Register = new RegisterModel
                     {
                         Register = key,
                         Value = value
                     };
+                    if (key == 21 || key == 22)
+                    {
+                        Register.Value = -Math.Round(value / 1000);
+                        Register.Description = "Negative energy accumulator";
+                    }
+                    else if (key == 33 || key == 34)
+                    {
+                        Register.Value = Math.Round(value / 10000, 4);
+                        Register.Description = "Temperature #1/inlet";
+                        Register.Unit = "°C";
+                    }
+                    else if (key == 92)
+                    {
+                        var v = Math.Round(value / 10, 1);
+                        Register.Value = Math.Round(v);
+                        Register.Description = "Signal Quality";
+                        Register.Unit = "%";
+                    }
+                    else
+                    {
+                        Register.Value = value;
+                        Register.Description = null;
+                        Register.Unit = null;
+                    }
+
                     parsedData.Registers.Add(Register);
 
                 };
+
             }
             parsedDatas.Add(parsedData);
-
             return parsedDatas;
 
         }

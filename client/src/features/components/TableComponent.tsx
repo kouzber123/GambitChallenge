@@ -16,7 +16,7 @@ export default function TableComponent({ gambitData }: Props) {
   return (
     <TableContainer component={Paper}>
       <Table
-        sx={{ minWidth: 650 }}
+        sx={{ width: "100%" }}
         size="small"
         aria-label="a dense table"
       >
@@ -26,17 +26,20 @@ export default function TableComponent({ gambitData }: Props) {
             <React.Fragment key={index}>
               <TableRow sx={{ backgroundColor: "#93c5fd" }}>
                 <TableCell>
-                  <Typography>Date: {item.timeStamp}</Typography>{" "}
+                  <Typography>Date: {item.timeStamp}</Typography>
                 </TableCell>
+                <TableCell></TableCell>
                 <TableCell></TableCell>
               </TableRow>
               <TableRow sx={{ backgroundColor: "#bfdbfe" }}>
                 <TableCell>
-                  {" "}
                   <strong> Registers</strong>
                 </TableCell>
-                <TableCell align="left">
+                <TableCell>
                   <strong>Values</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>Description</strong>
                 </TableCell>
               </TableRow>
               {item.registers.map(x => (
@@ -60,8 +63,14 @@ export default function TableComponent({ gambitData }: Props) {
                     align="left"
                   >
                     {" "}
-                    {/* And here */}
                     {x.value}
+                    {x.unit}
+                  </TableCell>
+                  <TableCell
+                    key={x.description}
+                    align="left"
+                  >
+                    {x.description}
                   </TableCell>
                 </TableRow>
               ))}
