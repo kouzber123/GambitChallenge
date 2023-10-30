@@ -123,7 +123,14 @@ namespace API.Helper
                             Register.Description = "Output current";
                             Register.Unit = "mA";
                         };
-                        if (key >= 43 && key <= 48) Register.Description = "Current input at AI3 ";
+                        if (key >= 43 && key <= 48)
+                        {
+                            if (key >= 43 && key <= 44)
+                            {
+                                Register.Unit = "mA";
+                            }
+                            Register.Description = "Current input at AI3 ";
+                        };
 
 
                     }
