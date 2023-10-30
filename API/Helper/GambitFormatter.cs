@@ -16,6 +16,7 @@ namespace API.Helper
         /// <returns></returns>
         public static List<ParsedData> FormatData(string rawData)
         {
+
             List<ParsedData> parsedDatas = new();
             var lines = rawData.Split('\n');
             var parsedData = new ParsedData
@@ -35,23 +36,95 @@ namespace API.Helper
                         Register = key,
                         Value = value
                     };
-                    if (key == 21 || key == 22)
+                    //add long formatter here
+                    if (key >= 21 && key <= 22 || key >= 17 && key <= 18 || key >= 9 && key <= 10 || key >= 13 && key <= 14)
                     {
-                        Register.Value = -Math.Round(value / 1000);
-                        Register.Description = "Negative energy accumulator";
+                        Register.Value = key >= 21 && key <= 22 ? -Valueformatter.LongFormatter(value) : Valueformatter.LongFormatter(value);
+                        string extraWord = key >= 9 && key <= 10 ? "" : "energy";
+                        string isPositive = key >= 13 && key <= 14 ? "Negative" : "Positive";
+                        Register.Description = key >= 21 && key <= 22 ? "Negative energy accumulator" : $"{isPositive} {extraWord} accumulator ";
+
                     }
-                    else if (key == 33 || key == 34)
+                    //real4 here
+                    else if (key >= 31 && key <= 48 || key >= 1 && key <= 8
+                    || key >= 19 && key <= 20 || key >= 23 && key <= 24
+                     || key >= 15 && key <= 16 || key >= 11 && key <= 12
+                     || key >= 77 && key <= 90
+                     )
                     {
-                        Register.Value = Math.Round(value / 10000, 4);
-                        Register.Description = "Temperature #1/inlet";
-                        Register.Unit = "°C";
+                        Register.Value = key >= 21 && key <= 22 || key >= 15 && key <= 16 || key >= 31 && key <= 32 ? -Valueformatter.Real4formatter(value) : Valueformatter.Real4formatter(value);
+                        if (key >= 1 && key <= 2)
+                        {
+                            Register.Unit = "m3/h"; Register.Description = "Flow Rate";
+                        }
+
+                        if (key >= 3 && key <= 4)
+                        {
+                            Register.Unit = "GJ/h";
+                            Register.Description = "Energy Flow Rate ";
+                        }
+                        if (key >= 5 && key <= 8)
+                        {
+                            Register.Unit = "m/s";
+                            Register.Description = key >= 5 && key <= 6 ? "Velocity " : "Fluid sound speed";
+
+                        };
+
+                        if (key >= 33 && key <= 36)
+                        {
+                            Register.Unit = "°C";
+
+                            if (key == 33 || key == 34) Register.Description = "Temperature #1/inlet";
+                            else if (key == 35 || key == 36) Register.Description = "Temperature #2/outlet";
+
+                        }
+                        if (key >= 77 && key <= 80)
+                        {
+                            Register.Unit = "Ohm";
+
+                            if (key == 77 || key == 78) Register.Description = "PT100 resistance of inlet";
+                            else if (key == 79 || key == 80) Register.Description = "PT100 resistance of outlet ";
+
+                        }
+                        if (key == 11 || key == 12) Register.Description = "Positive decimal fraction ";
+                        if (key == 15 || key == 16) Register.Description = "Negative decimal fraction";
+                        if (key == 19 || key == 20) Register.Description = "Positive energy decimal fraction";
+                        if (key == 31 || key == 32) Register.Description = "Net energy decimal fraction";
+                        if (key == 23 || key == 24) Register.Description = "Negative energy decimal fraction";
+                        if (key == 39 || key == 40) Register.Description = "Analog input AI4";
+                        if (key == 39 || key == 40) Register.Description = "Analog input AI4";
+                        if (key == 41 || key == 42) Register.Description = "Analog input AI5";
+
+                        if (key >= 81 && key <= 88)
+                        {
+                            var unitKey = key >= 83 && key <= 84 ? "Nino" : "Micro";
+                            var keyString = key >= 81 && key <= 82 ? "Total" : "Delta";
+                            Register.Description = $"{keyString} travel time ";
+
+                            Register.Unit = $"{unitKey}-second";
+                        }
+                        if (key >= 85 && key <= 86) Register.Description = "Upstream travel time ";
+                        if (key >= 87 && key <= 88) Register.Description = "Downstream travel time";
+                        if (key >= 89 && key <= 90)
+                        {
+                            Register.Description = "Output current";
+                            Register.Unit = "mA";
+                        };
+                        if (key >= 43 && key <= 48) Register.Description = "Current input at AI3 ";
+
+
                     }
-                    else if (key == 92)
+                    else if (key == 92 || key >= 59 && key <= 62)
                     {
-                        var v = Math.Round(value / 10, 1);
-                        Register.Value = Math.Round(v);
-                        Register.Description = "Signal Quality";
-                        Register.Unit = "%";
+
+                        if (key == 59) Register.Description = "Key to input";
+                        if (key == 60) Register.Description = "Go to Window #";
+                        if (key == 61) Register.Description = "LCD Back-lit lights for number of seconds ";
+                        if (key == 62) Register.Description = "Times for the beeper  or Pulses left for OCT";
+                        if (key == 92) Register.Description = "Signal Quality";
+                        Register.Value = Valueformatter.IntegerFormatter(value);
+
+                        Register.Unit = key >= 59 && key <= 62 ? " Writeable" : "%";
                     }
                     else
                     {

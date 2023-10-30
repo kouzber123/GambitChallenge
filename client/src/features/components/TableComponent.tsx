@@ -63,8 +63,7 @@ export default function TableComponent({ gambitData }: Props) {
                     align="left"
                   >
                     {" "}
-                    {x.value}
-                    {x.unit}
+                    {x.value} {x.unit}
                   </TableCell>
                   <TableCell
                     key={x.description}
