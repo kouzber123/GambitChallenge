@@ -37,19 +37,28 @@ namespace API.Helper
                         Value = value
                     };
                     //add long formatter here
-                    if (key >= 21 && key <= 22 || key >= 17 && key <= 18 || key >= 9 && key <= 10 || key >= 13 && key <= 14)
+                    if (key >= 21 && key <= 22 || key >= 17 && key <= 18 || key >= 9 && key <= 10 || key >= 13 && key <= 14 || key >= 25 && key <= 26 || key >= 29 && key <= 30)
                     {
-                        Register.Value = key >= 21 && key <= 22 ? -Valueformatter.LongFormatter(value) : Valueformatter.LongFormatter(value);
-                        string extraWord = key >= 9 && key <= 10 ? "" : "energy";
-                        string isPositive = key >= 13 && key <= 14 ? "Negative" : "Positive";
-                        Register.Description = key >= 21 && key <= 22 ? "Negative energy accumulator" : $"{isPositive} {extraWord} accumulator ";
 
+                        if (key == 9 || key == 10 || key == 13 || key == 14 || key == 21 || key == 22 || key == 17 || key == 18)
+                        {
+
+                            string extraWord = key >= 9 && key <= 10 || key >= 13 && key <= 14 ? "" : "energy";
+                            string isPositive = key >= 13 && key <= 14 ? "Negative" : "Positive";
+                            Register.Description = key >= 21 && key <= 22 ? "Negative energy accumulator" : $"{isPositive} {extraWord} accumulator ";
+                        }
+                        Register.Value = key >= 21 && key <= 22 ? -Valueformatter.LongFormatter(value) : Valueformatter.LongFormatter(value);
+                        if (key >= 25 && key <= 26) Register.Description = "Net accumulator";
+                        if (key >= 29 && key <= 30) Register.Description = "Net energy accumulator";
                     }
+
                     //real4 here
                     else if (key >= 31 && key <= 48 || key >= 1 && key <= 8
                     || key >= 19 && key <= 20 || key >= 23 && key <= 24
                      || key >= 15 && key <= 16 || key >= 11 && key <= 12
-                     || key >= 77 && key <= 90
+                     || key >= 77 && key <= 90 || key >= 27 && key <= 28
+                     || key >= 37 && key <= 38 || key >= 27 && key <= 28
+                     || key >= 99 && key <= 100 || key >= 97 && key <= 98
                      )
                     {
                         Register.Value = key >= 21 && key <= 22 || key >= 15 && key <= 16 || key >= 31 && key <= 32 ? -Valueformatter.Real4formatter(value) : Valueformatter.Real4formatter(value);
@@ -89,8 +98,12 @@ namespace API.Helper
                         if (key == 11 || key == 12) Register.Description = "Positive decimal fraction ";
                         if (key == 15 || key == 16) Register.Description = "Negative decimal fraction";
                         if (key == 19 || key == 20) Register.Description = "Positive energy decimal fraction";
+                        if (key == 27 || key == 28) Register.Description = "Net decimal fraction ";
                         if (key == 31 || key == 32) Register.Description = "Net energy decimal fraction";
                         if (key == 23 || key == 24) Register.Description = "Negative energy decimal fraction";
+                        if (key == 25 || key == 26) Register.Description = "Net accumulator";
+                        if (key == 27 || key == 28) Register.Description = "Net decimal fraction";
+                        if (key == 37 || key == 38) Register.Description = "Analog input AI3 ";
                         if (key == 39 || key == 40) Register.Description = "Analog input AI4";
                         if (key == 39 || key == 40) Register.Description = "Analog input AI4";
                         if (key == 41 || key == 42) Register.Description = "Analog input AI5";
@@ -114,7 +127,7 @@ namespace API.Helper
 
 
                     }
-                    else if (key == 92 || key >= 59 && key <= 62)
+                    else if (key == 92 || key >= 59 && key <= 62 || key >= 93 && key <= 96)
                     {
 
                         if (key == 59) Register.Description = "Key to input";
@@ -122,9 +135,18 @@ namespace API.Helper
                         if (key == 61) Register.Description = "LCD Back-lit lights for number of seconds ";
                         if (key == 62) Register.Description = "Times for the beeper  or Pulses left for OCT";
                         if (key == 92) Register.Description = "Signal Quality";
+                        if (key == 93) Register.Description = "Upstream strength ";
+                        if (key == 94) Register.Description = "Downstream strength";
+                        if (key == 95) Register.Description = null;
+                        if (key == 96) Register.Description = "Language used in user interface ";
                         Register.Value = Valueformatter.IntegerFormatter(value);
 
-                        Register.Unit = key >= 59 && key <= 62 ? " Writeable" : "%";
+                        if (key >= 93 && key <= 96) Register.Unit = "Range 0-2047";
+                        else
+                        {
+                            Register.Unit = key >= 59 && key <= 62 ? " Writeable" : "%";
+                        }
+
                     }
                     else
                     {
